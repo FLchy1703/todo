@@ -20,4 +20,19 @@ public class TaskController {
     public Task save(@RequestBody Task task) {
         return repo.save(task);
     }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
+        repo.deleteById(id);
+    }
+
+    @PutMapping("{id}")
+    public Task update(@PathVariable Long id, @RequestBody Task task) {
+        Task old = repo.findById(id).orElseThrow();
+        old.setTitle(task.getTitle());
+        old.setDone(task.isDone());
+        return repo.save(old);
+    }
+
+
 }
